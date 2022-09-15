@@ -1,6 +1,6 @@
 function getMinMax(str) {
   let result = {};
-  arr = str.split(' ').map(item => !isNaN(item)  &&  +item ).filter(item => typeof(item) == "number").sort(compareNumeric);
+  arr = str.split(' ').map(item => +item).filter(item => !isNaN(item)).sort(compareNumeric);
   
   function compareNumeric(a, b) {
     if (a > b) return 1;

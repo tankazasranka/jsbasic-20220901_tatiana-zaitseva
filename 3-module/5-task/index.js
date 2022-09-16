@@ -1,5 +1,4 @@
 function getMinMax(str) {
-  let result = {};
   arr = str.split(' ').map(item => +item).filter(item => !isNaN(item)).sort(compareNumeric);
   
   function compareNumeric(a, b) {
@@ -8,7 +7,8 @@ function getMinMax(str) {
     if (a < b) return -1;
     }
 	
-  result.min = arr.shift();
-  result.max = arr.pop();
-  return result;
+  return {
+    min: arr[0],
+    max: arr.pop()
+  };
 }

@@ -1,3 +1,3 @@
 function showSalary(users, age) {
-  return users.map((item) => {if (item.age <= age) { return `${item.name}, ${item.balance}`}}).filter(item => item).join('\n')
+  return users.filter((item) => item.age <= age).map(item =>  `${item.name}, ${item.balance}`).join('\n');
 }

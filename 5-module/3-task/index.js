@@ -14,20 +14,16 @@ function initCarousel() {
     let div = target.closest('div'); 
 
     if (div.classList.contains('carousel__arrow_right')) { 
-      //if (target.parentElement.tagName == "DIV") {
         slide += 1;
         allSlide.style.transform = `translateX(${-slide*widthSlide}px)`;
         buttonLeft.style.display = ''
-      //} 
     }
 
     if (div.classList.contains(`carousel__arrow_left`) ) { 
-      //if (target.parentElement.tagName == "DIV") {
           slide -= 1;
           allSlide.style.transform = `translateX(${-slide*widthSlide}px)`;
           buttonRight.style.display = ''
         }  
-    //}
 
     if (slide >=3 ) { 
       buttonRight.style.display = 'none'

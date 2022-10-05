@@ -25,7 +25,7 @@ export default class UserTable {
     this.elem = this.#createElement(this.#template());
    
       this.elem.onclick = function({ target }) {
-        target.addEventListener("click",  target.closest('tr').remove())
+       target.closest('tr').remove()
       }
   }
 

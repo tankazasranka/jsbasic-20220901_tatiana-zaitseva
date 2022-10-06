@@ -44,6 +44,15 @@ export default class Carousel {
   `);
 
   carousel_inner.append(temp);
+
+  let event = new CustomEvent("product-add", {
+    detail: slide.id, 
+    bubbles: true
+  }
+
+  this.elem.onclick = function({ target }) {
+    target.closest('.carousel__button').dispatchEvent(event)
+  } 
   }
 }
 

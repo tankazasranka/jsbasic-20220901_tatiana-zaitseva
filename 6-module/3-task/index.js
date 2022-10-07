@@ -3,15 +3,12 @@ import createElement from '../../assets/lib/create-element.js';
 export default class Carousel {
   constructor(slides) {
     this.slides = slides.map(elem => elem);
-    
-    this.#renderCarousel();
 
+    this.#renderCarousel();
     this.#moveSlide();
   }
 
-  #renderCarousel() {
-
-  let container = document.querySelector('.container');
+  #renderCarousel(){
 
   this.elem = createElement(`<div class="carousel">
   <div class="carousel__arrow carousel__arrow_right">
@@ -22,9 +19,7 @@ export default class Carousel {
   </div>
   </div>`);
 
-  container.append(this.elem);
-
-  let carousel_inner = document.createElement('div');
+  let carousel_inner= document.createElement('div');
   carousel_inner.className = "carousel__inner";
   this.elem.append(carousel_inner);
   
@@ -42,46 +37,43 @@ export default class Carousel {
         </div>
       </div>
   `);
-
-  carousel_inner.append(temp);
-
-  let event = new CustomEvent("product-add", {
-    detail: slide.id, 
-    bubbles: true
+      carousel_inner.append(temp);
   }
 
-  this.elem.onclick = function({ target }) {
-    target.closest('.carousel__button').dispatchEvent(event)
-  } 
-  }
+  const carouselBtn = this.elem.querySelectorAll(".carousel__button");
+
+    carouselBtn.forEach((btn) => {
+      btn.addEventListener("click", this.#addEvent);
+    });
 }
 
   #moveSlide() {
-    let buttonLeft = document.querySelector('.carousel__arrow_left');
-    let buttonRight = document.querySelector('.carousel__arrow_right');
-    let allSlide = document.querySelector('.carousel__inner');
-    let widthSlide = document.querySelector('.carousel__slide').offsetWidth;
-  
-    let slide = 0;
+    let buttonLeft =  this.elem.querySelector('.carousel__arrow_left');
+    let buttonRight =  this.elem.querySelector('.carousel__arrow_right');
+    let allSlide =  this.elem.querySelector('.carousel__inner');
+    let widthSlide =  this.elem.querySelector('.carousel__slide');
     
+    let slide = 0;
+
     buttonLeft.style.display = 'none';
-  
-    this.elem.onclick = function({ target }) {
+    let lengthArraySlide = this.slides.length
+
+    this.elem.onclick = function(event) {
+      let target = event.target;
       let div = target.closest('div'); 
-  
+
       if (div.classList.contains('carousel__arrow_right')) { 
           slide += 1;
-          allSlide.style.transform = `translateX(${-slide*widthSlide}px)`;
+          allSlide.style.transform = `translateX(${-slide*widthSlide.offsetWidth}px)`;
           buttonLeft.style.display = '';
       }
   
       if (div.classList.contains(`carousel__arrow_left`) ) { 
             slide -= 1;
-            allSlide.style.transform = `translateX(${-slide*widthSlide}px)`;
+            allSlide.style.transform = `translateX(${-slide*widthSlide.offsetWidth}px)`;
             buttonRight.style.display = ''
-          }  
-  
-      if (slide >=3 ) { 
+          }
+      if (slide >= lengthArraySlide-1) { 
         buttonRight.style.display = 'none';
       }
       if (slide <= 0) {
@@ -89,5 +81,16 @@ export default class Carousel {
       }
     }
   }
+
+  #addEvent = (e) => {
+    const slide = e.target.closest(".carousel__slide");
+    const productId = slide.dataset.id;
+
+    const event = new CustomEvent("product-add", {
+      detail: productId,
+      bubbles: true,
+    });
+    this.elem.querySelector(".carousel__button").dispatchEvent(event);
+  };
 
 }
